@@ -1,0 +1,25 @@
+This package contains an init script for the ftpd-topfield program by
+Steve Bennett. It will probably work on all Debian-based distributions, tough 
+I have tested it on Ubuntu only.
+
+Installation
+-------------
+Assuming you installed ftpd-topfield, run `make install` as root. This will
+install the init script and configuration file.
+
+Configuration
+--------------
+If the default config doesn't fit your needs, edit /etc/defaults/ftpd-topfield
+and set the variables accordingly.
+
+Author
+-------
+The init script is written by Leon Weber. Feel free to contact me for any
+questions regarding this package:
+- Jabber-ID: leon@jabber.ccc.de
+- E-mail: leon@leonweber.de
+
+Copyright
+----------
+Download, share, translate, remix, bend, modify, copy, trash, bash, move,
+publish, burn, hide, remake, plz KOPIMI!
