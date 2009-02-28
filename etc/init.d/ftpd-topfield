@@ -36,7 +36,8 @@ test -f $FTPD_BIN || { log_error_msg "$FTPD_BIN not installed";
 }
 
 is_running() {
-  pidofproc $FTPD_PIDFILE $FTPD_BIN >/dev/null || status="$?"
+  status="0"
+  pidofproc -p $FTPD_PIDFILE $FTPD_BIN >/dev/null || status="$?"
   if [ "$status" = 0 ]; then
     return 0
   else
