@@ -1,5 +1,5 @@
 This package contains an init script for the ftpd-topfield program by
-Steve Bennett. It will probably work on all Debian-based distributions, tough 
+Steve Bennett. It will probably work on all Debian-based distributions, though 
 I have tested it on Ubuntu only.
 
 Installation
