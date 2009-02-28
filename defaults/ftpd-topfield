@@ -1,0 +1,14 @@
+## Set these variables to override the default settings from the
+## ftpd-topfield init script.
+
+## Full path to the ftpd-topfield binary
+#FTPD_BIN=/usr/sbin/ftpd-topfield
+
+## The port for the server to listen on
+#FTPD_PORT=21
+
+## The location where the pid file shall be stored
+#FTPD_PIDFILE=/var/run/tftpd-topfield.pid
+
+## Additional command line arguments for ftpd-topfield
+#FTPD_OPTS=
