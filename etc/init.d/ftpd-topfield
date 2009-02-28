@@ -51,7 +51,7 @@ start_ftpd() {
   fi
 
   log_daemon_msg "Starting ftpd-topfield ftp server..." "ftpd-topfield."
-  if start-stop-daemon --start --quiet --oknodo --pidfile "$FTPD_PIDFILE" --exec "$FTPD_BIN" -- "-P $FTPD_PORT -D $FTPD_OPTS"; then
+  if start-stop-daemon --start --quiet --oknodo --pidfile $FTPD_PIDFILE --exec $FTPD_BIN -- -P $FTPD_PORT -D $FTPD_OPTS; then
     log_end_msg 0
     return 0
   else
@@ -67,7 +67,7 @@ stop_ftpd() {
   fi
 
   log_daemon_msg "Stopping ftpd-topfield ftp server..." "ftpd-topfield."
-  if start-stop-daemon --stop --quiet --oknodo --pidfile "$FTPD_PIDFILE"; then
+  if start-stop-daemon --stop --quiet --oknodo --pidfile $FTPD_PIDFILE; then
     log_end_msg 0
     return 0
   else
