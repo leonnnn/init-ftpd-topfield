@@ -26,9 +26,9 @@ FTPD_CONF=/etc/default/ftpd-topfield
 FTPD_PORT=21
 FTPD_OPTS=
 FTPD_PIDFILE=/var/run/tftpd-topfield.pid
-test -f $FTPD_CONF && source $FTPD_CONF
+test -f $FTPD_CONF && . $FTPD_CONF
 
-source /lib/lsb/init-functions
+. /lib/lsb/init-functions
 
 test -f $FTPD_BIN || { log_error_msg "$FTPD_BIN not installed";
   if [ "$1" = "stop" ]; then exit 0;
