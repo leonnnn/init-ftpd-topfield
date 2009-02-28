@@ -61,7 +61,7 @@ start_ftpd() {
 }
     
 stop_ftpd() {
-  if !is_running; then
+  if ! is_running; then
     log_warning_msg "Not stopping ftpd-topfield as it's not running."
     return 1
   fi
