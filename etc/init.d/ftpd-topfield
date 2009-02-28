@@ -25,7 +25,7 @@ FTPD_BIN=/usr/sbin/ftpd-topfield
 FTPD_CONF=/etc/default/ftpd-topfield
 FTPD_PORT=21
 FTPD_OPTS=
-FTPD_PIDFILE=/var/run/tftpd-topfield.pid
+FTPD_PIDFILE=/var/run/ftpd-topfield.pid
 test -f $FTPD_CONF && . $FTPD_CONF
 
 . /lib/lsb/init-functions
