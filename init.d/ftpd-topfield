@@ -1,0 +1,111 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:           ftpd-topfield
+# Required-start:     udev
+# Required-stop:
+# Default-start:      3 5
+# Default-stop:       0 6
+# Short-Description:  topfield ftp daemon
+### END INIT INFO
+
+#
+# Author: Leon Weber <leon@leonweber.de>
+#
+# Copyright note: 
+#   Download, share, translate, remix, bend, modify,
+#   copy, trash, bash, move, publish, burn, hide, 
+#   remake, plz KOPIMI! 
+#
+
+SCRIPTNAME=$0
+
+# set sane defaults, let the config override them if there is one
+FTPD_BIN=/usr/sbin/ftpd-topfield
+FTPD_CONF=/etc/default/ftpd-topfield
+FTPD_PORT=21
+FTPD_OPTS=
+FTPD_PIDFILE=/var/run/tftpd-topfield.pid
+test -f $FTPD_CONF && source $FTPD_CONF
+
+source /lib/lsb/init-functions
+
+test -f $FTPD_BIN || { log_error_msg "$FTPD_BIN not installed";
+  if [ "$1" = "stop" ]; then exit 0;
+  else exit 5; fi;
+}
+
+is_running() {
+  pidofproc $FTPD_PIDFILE $FTPD_BIN >/dev/null || status="$?"
+  if [ "$status" = 0 ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+start_ftpd() {
+  if is_running; then
+    log_warning_msg "Not starting ftpd-topfield as it's already running."
+    return 1
+  fi
+
+  log_daemon_msg "Starting ftpd-topfield ftp server..." "ftpd-topfield."
+  if start-stop-daemon --start --quiet --oknodo --pidfile "$FTPD_PIDFILE" --exec "$FTPD_BIN" -- "-P $FTPD_PORT -D $FTPD_OPTS"; then
+    log_end_msg 0
+    return 0
+  else
+    log_end_msg 1
+    return 2
+  fi
+}
+    
+stop_ftpd() {
+  if !is_running; then
+    log_warning_msg "Not stopping ftpd-topfield as it's not running."
+    return 1
+  fi
+
+  log_daemon_msg "Stopping ftpd-topfield ftp server..." "ftpd-topfield."
+  if start-stop-daemon --stop --quiet --oknodo --pidfile "$FTPD_PIDFILE"; then
+    log_end_msg 0
+    return 0
+  else
+    log_end_msg 1
+    return 2
+  fi
+}
+
+restart_ftpd() {
+  stop_ftpd &&
+  start_ftpd
+}
+
+usage() {
+  log_warning_msg "Usage: $SCRIPTNAME {start|stop|restart|status}"
+  return 3
+}
+
+case "$1" in
+  start)
+    start_ftpd
+    exit $?
+    ;;
+  stop)
+    stop_ftpd
+    exit $?
+    ;;
+  reload|force-reload|restart)
+    restart_ftpd
+    exit $?
+    ;;
+  status)
+    status_of_proc -p "$FTPD_PIDFILE" "$FTPD_BIN" $(basename "$FTPD_BIN")
+    exit $?
+    ;;
+  *)
+    usage
+    exit $?
+    ;;
+esac
+  
