@@ -35,6 +35,7 @@ test -f $FTPD_BIN || { log_error_msg "$FTPD_BIN not installed";
   else exit 5; fi;
 }
 
+# helper function to check if the service is running.
 is_running() {
   status="0"
   pidofproc -p $FTPD_PIDFILE $FTPD_BIN >/dev/null || status="$?"
@@ -45,6 +46,11 @@ is_running() {
   fi
 }
 
+# Starts the service. Returns
+#   0 if the service started successfully.
+#   1 if the service was already running.
+#   2 if the service failed to start
+# following the Debian policy.
 start_ftpd() {
   if is_running; then
     log_warning_msg "Not starting ftpd-topfield as it's already running."
@@ -61,6 +67,11 @@ start_ftpd() {
   fi
 }
     
+# Stops the service. Returns
+#   0 if the service stopped successfully.
+#   1 if the service was not running.
+#   2 if the service failed to stop
+# following the Debian policy.
 stop_ftpd() {
   if ! is_running; then
     log_warning_msg "Not stopping ftpd-topfield as it's not running."
@@ -77,11 +88,13 @@ stop_ftpd() {
   fi
 }
 
+# Wrapper function to restart the service.
 restart_ftpd() {
   stop_ftpd
   start_ftpd
 }
 
+# Print usage information.
 usage() {
   log_warning_msg "Usage: $SCRIPTNAME {start|stop|restart|status}"
   return 3
