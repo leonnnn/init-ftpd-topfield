@@ -78,7 +78,7 @@ stop_ftpd() {
 }
 
 restart_ftpd() {
-  stop_ftpd &&
+  stop_ftpd
   start_ftpd
 }
 
